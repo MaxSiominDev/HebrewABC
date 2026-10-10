@@ -4,6 +4,8 @@ Flashcards for learning the Hebrew alphabet. Open the page, see a letter, try
 to recall its name and sound, flip the card to check yourself. That is the
 whole idea.
 
+Try it: https://hebrew.maxsyomin.dev
+
 ## Development
 
 React, TypeScript, Vite. The site is fully static: no backend, no network
