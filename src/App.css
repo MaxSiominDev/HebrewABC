@@ -1,0 +1,213 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px calc(16px + env(safe-area-inset-right, 0px))
+    calc(16px + env(safe-area-inset-bottom, 0px)) calc(16px + env(safe-area-inset-left, 0px));
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.header-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.header-subtitle {
+  margin: 2px 0 0;
+  font-size: 13px;
+}
+
+.card-area {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.card {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-height: 560px;
+  margin: 0 auto;
+  perspective: 1200px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+}
+
+.card:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 4px;
+  border-radius: 24px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.35s ease;
+}
+
+.card-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 24px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  text-align: center;
+}
+
+.card-face p {
+  margin: 0;
+}
+
+.card-face-front {
+  font-size: clamp(96px, 38vmin, 200px);
+  line-height: 1;
+}
+
+.card-face-back {
+  transform: rotateY(180deg);
+  gap: 14px;
+}
+
+.card-name {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.card-sound {
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.card-sound-long {
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.card-sound-note {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.card-russian {
+  font-size: 20px;
+}
+
+.card-russian-long {
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+.card-slide-next {
+  animation: card-slide-next 0.18s ease-out;
+}
+
+.card-slide-prev {
+  animation: card-slide-prev 0.18s ease-out;
+}
+
+@keyframes card-slide-next {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+}
+
+@keyframes card-slide-prev {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+}
+
+.hints {
+  margin: 14px 0 10px;
+  text-align: center;
+}
+
+.hints p {
+  margin: 2px 0;
+  font-size: 13px;
+}
+
+.button {
+  min-height: 48px;
+  padding: 0 16px;
+  font: inherit;
+  font-size: 15px;
+  color: #000;
+  background: #fff;
+  border: 1.5px solid #000;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #f5f5f5;
+}
+
+.button:active {
+  background: #000;
+  color: #fff;
+}
+
+.nav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.counter {
+  min-width: 72px;
+  text-align: center;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.deck-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-inner {
+    transition: none;
+  }
+
+  .card-slide-next,
+  .card-slide-prev {
+    animation: none;
+  }
+}
