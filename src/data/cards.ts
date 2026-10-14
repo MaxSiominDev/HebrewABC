@@ -4,6 +4,7 @@ export interface Card {
   readonly sound: string
   readonly soundNote?: string
   readonly russian: string
+  readonly final?: boolean
 }
 
 export const CARDS: readonly Card[] = [
@@ -39,9 +40,16 @@ export const CARDS: readonly Card[] = [
   { letter: 'ר', name: 'RESH', sound: 'R', russian: 'Р' },
   { letter: 'ש', name: 'SHIN / SIN', sound: 'SH / S', russian: 'Ш / С' },
   { letter: 'ת', name: 'TAV', sound: 'T', russian: 'Т' },
-  { letter: 'ך', name: 'FINAL KAF', sound: 'KH', russian: 'Х' },
-  { letter: 'ם', name: 'FINAL MEM', sound: 'M', russian: 'М' },
-  { letter: 'ן', name: 'FINAL NUN', sound: 'N', russian: 'Н' },
-  { letter: 'ף', name: 'FINAL PE', sound: 'F', russian: 'Ф' },
-  { letter: 'ץ', name: 'FINAL TSADI', sound: 'TS', soundNote: 'as in "cats"', russian: 'Ц' },
+  { letter: 'ך', name: 'FINAL KAF', sound: 'KH', russian: 'Х', final: true },
+  { letter: 'ם', name: 'FINAL MEM', sound: 'M', russian: 'М', final: true },
+  { letter: 'ן', name: 'FINAL NUN', sound: 'N', russian: 'Н', final: true },
+  { letter: 'ף', name: 'FINAL PE', sound: 'F', russian: 'Ф', final: true },
+  {
+    letter: 'ץ',
+    name: 'FINAL TSADI',
+    sound: 'TS',
+    soundNote: 'as in "cats"',
+    russian: 'Ц',
+    final: true,
+  },
 ]

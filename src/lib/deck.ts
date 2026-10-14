@@ -1,9 +1,12 @@
 import type { Card } from '../data/cards'
 
+export type DeckFilter = 'all' | 'regular' | 'final'
+
 export type MoveDirection = 'next' | 'prev' | 'reset'
 
 export interface DeckState {
   readonly order: readonly Card[]
+  readonly filter: DeckFilter
   readonly position: number
   readonly flipped: boolean
   readonly direction: MoveDirection
@@ -15,9 +18,10 @@ export type DeckAction =
   | { type: 'next' }
   | { type: 'prev' }
   | { type: 'set-order'; order: readonly Card[] }
+  | { type: 'set-filter'; filter: DeckFilter; order: readonly Card[] }
 
 export function initialDeckState(order: readonly Card[]): DeckState {
-  return { order, position: 0, flipped: false, direction: 'reset', revision: 0 }
+  return { order, filter: 'all', position: 0, flipped: false, direction: 'reset', revision: 0 }
 }
 
 export function deckReducer(state: DeckState, action: DeckAction): DeckState {
@@ -36,15 +40,29 @@ export function deckReducer(state: DeckState, action: DeckAction): DeckState {
       }
     }
     case 'set-order':
-      return {
-        ...state,
-        order: action.order,
-        position: 0,
-        direction: 'reset',
-        flipped: false,
-        revision: state.revision + 1,
-      }
+      return restart(state, action.order, state.filter)
+    case 'set-filter':
+      return restart(state, action.order, action.filter)
   }
+}
+
+// Shuffling, restoring the alphabet order and changing the filter all swap the deck out, so the view restarts
+function restart(state: DeckState, order: readonly Card[], filter: DeckFilter): DeckState {
+  return {
+    ...state,
+    order,
+    filter,
+    position: 0,
+    direction: 'reset',
+    flipped: false,
+    revision: state.revision + 1,
+  }
+}
+
+export function cardsForFilter(cards: readonly Card[], filter: DeckFilter): readonly Card[] {
+  if (filter === 'all') return cards
+  const wantFinal = filter === 'final'
+  return cards.filter((card) => Boolean(card.final) === wantFinal)
 }
 
 // Fisher-Yates over a copy, so the source order stays intact

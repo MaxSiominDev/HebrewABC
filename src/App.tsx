@@ -1,6 +1,17 @@
 import { FlashCard } from './components/FlashCard'
 import { useDeck } from './hooks/useDeck'
+import type { DeckFilter } from './lib/deck'
 import './App.css'
+
+const FILTER_OPTIONS: readonly { value: DeckFilter; label: string }[] = [
+  { value: 'all', label: 'All letters' },
+  { value: 'regular', label: 'Without final' },
+  { value: 'final', label: 'Final only' },
+]
+
+function isDeckFilter(value: string): value is DeckFilter {
+  return FILTER_OPTIONS.some((option) => option.value === value)
+}
 
 export default function App() {
   const deck = useDeck()
@@ -42,12 +53,31 @@ export default function App() {
       </nav>
 
       <div className="deck-controls">
-        <button type="button" className="button" onClick={deck.shuffle}>
-          Shuffle
-        </button>
-        <button type="button" className="button" onClick={deck.restoreAlphabet}>
-          Alphabetical
-        </button>
+        <label className="filter">
+          <span>Filter</span>
+          <select
+            className="filter-select"
+            value={deck.filter}
+            onChange={(event) => {
+              if (isDeckFilter(event.target.value)) deck.setFilter(event.target.value)
+            }}
+          >
+            {FILTER_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <div className="deck-buttons">
+          <button type="button" className="button" onClick={deck.shuffle}>
+            Shuffle
+          </button>
+          <button type="button" className="button" onClick={deck.restoreAlphabet}>
+            Alphabetical
+          </button>
+        </div>
       </div>
     </div>
   )
