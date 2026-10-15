@@ -9,7 +9,6 @@ export function LetterTile({ card }: { card: Card }) {
         {card.sound}
         {card.soundNote && <span className="tile-note">{card.soundNote}</span>}
       </span>
-      <span className="tile-russian">{card.russian}</span>
     </li>
   )
 }

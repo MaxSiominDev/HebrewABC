@@ -142,15 +142,6 @@
   font-weight: 400;
 }
 
-.card-russian {
-  font-size: 20px;
-}
-
-.card-russian-long {
-  font-size: 16px;
-  line-height: 1.45;
-}
-
 .card-slide-next {
   animation: card-slide-next 0.18s ease-out;
 }
@@ -304,11 +295,6 @@
   display: block;
   font-size: 10px;
   font-weight: 400;
-}
-
-.tile-russian {
-  font-size: 11px;
-  line-height: 1.15;
 }
 
 @media (prefers-reduced-motion: reduce) {

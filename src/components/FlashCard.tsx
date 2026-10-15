@@ -11,7 +11,6 @@ import {
 } from '../lib/gestures'
 
 const LONG_SOUND_MAX_CHARS = 6
-const LONG_RUSSIAN_MAX_CHARS = 12
 
 interface FlashCardProps {
   card: Card
@@ -121,11 +120,6 @@ export function FlashCard({
           >
             {card.sound}
             {card.soundNote && <span className="card-sound-note">{card.soundNote}</span>}
-          </p>
-          <p
-            className={`card-russian${card.russian.length > LONG_RUSSIAN_MAX_CHARS ? ' card-russian-long' : ''}`}
-          >
-            {card.russian}
           </p>
         </div>
       </div>

@@ -22,7 +22,6 @@ describe('CARDS', () => {
       expect(card.letter).toBeTruthy()
       expect(card.name).toBeTruthy()
       expect(card.sound).toBeTruthy()
-      expect(card.russian).toBeTruthy()
     }
   })
 })
