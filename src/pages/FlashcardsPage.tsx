@@ -28,8 +28,7 @@ export function FlashcardsPage({ deck }: { deck: Deck }) {
       </main>
 
       <div className="hints">
-        <p>Tap or swipe left / right to flip</p>
-        <p>Swipe up / down</p>
+        <p>Tap to flip</p>
       </div>
 
       <nav className="nav">
