@@ -35,3 +35,5 @@ export function useDeck() {
     setFilter,
   }
 }
+
+export type Deck = ReturnType<typeof useDeck>
