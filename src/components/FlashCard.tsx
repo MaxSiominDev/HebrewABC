@@ -40,14 +40,18 @@ export function FlashCard({
 
     const gate = createWheelGate(() => performance.now())
     const handleWheel = (event: WheelEvent) => {
-      const step = gate(wheelPixelDelta(event.deltaMode, event.deltaY))
-      if (step === 1) onNext()
-      if (step === -1) onPrev()
+      const action = gate(
+        wheelPixelDelta(event.deltaMode, event.deltaX),
+        wheelPixelDelta(event.deltaMode, event.deltaY),
+      )
+      if (action === 'next') onNext()
+      else if (action === 'prev') onPrev()
+      else if (action === 'flip') onFlip()
     }
 
     element.addEventListener('wheel', handleWheel, { passive: true })
     return () => element.removeEventListener('wheel', handleWheel)
-  }, [onNext, onPrev])
+  }, [onFlip, onNext, onPrev])
 
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (!event.isPrimary || event.button !== 0) return
@@ -66,7 +70,7 @@ export function FlashCard({
       TAP_MAX_PX,
       SWIPE_MIN_PX,
     )
-    if (action === 'tap') onFlip()
+    if (action === 'tap' || action === 'swipe-left' || action === 'swipe-right') onFlip()
     else if (action === 'swipe-up') onNext()
     else if (action === 'swipe-down') onPrev()
   }
