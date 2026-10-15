@@ -13,6 +13,7 @@ describe('classifyGesture', () => {
 
   it('keeps the dead zone between tap and swipe silent', () => {
     expect(classifyGesture(0, -30, 12, 48)).toBe('ignored')
+    expect(classifyGesture(-30, 0, 12, 48)).toBe('ignored')
   })
 
   it('maps swipe up to next and swipe down to prev', () => {
@@ -21,38 +22,59 @@ describe('classifyGesture', () => {
     expect(classifyGesture(0, 60, 12, 48)).toBe('swipe-down')
   })
 
-  it('ignores horizontal and diagonal swipes', () => {
-    expect(classifyGesture(80, 0, 12, 48)).toBe('ignored')
-    expect(classifyGesture(90, -60, 12, 48)).toBe('ignored')
+  it('maps swipe left and swipe right to flip', () => {
+    expect(classifyGesture(-80, 0, 12, 48)).toBe('swipe-left')
+    expect(classifyGesture(80, 0, 12, 48)).toBe('swipe-right')
+    expect(classifyGesture(120, -10, 12, 48)).toBe('swipe-right')
+  })
+
+  it('gives a diagonal swipe to the dominant axis', () => {
+    expect(classifyGesture(90, -60, 12, 48)).toBe('swipe-right')
+    expect(classifyGesture(-60, 90, 12, 48)).toBe('swipe-down')
+  })
+
+  it('ignores a diagonal with no dominant axis', () => {
+    expect(classifyGesture(60, 60, 12, 48)).toBe('ignored')
+    expect(classifyGesture(-60, 60, 12, 48)).toBe('ignored')
   })
 })
 
 describe('createWheelGate', () => {
   it('accumulates small deltas until the threshold, then steps once', () => {
-    const now = 0
-    const gate = createWheelGate(() => now)
-    expect(gate(20)).toBe(0)
-    expect(gate(20)).toBe(0)
-    expect(gate(25)).toBe(1)
+    const gate = createWheelGate(() => 0)
+    expect(gate(0, 20)).toBeNull()
+    expect(gate(0, 20)).toBeNull()
+    expect(gate(0, 25)).toBe('next')
   })
 
   it('locks after a step until the wheel goes quiet', () => {
     let now = 0
     const gate = createWheelGate(() => now)
-    expect(gate(100)).toBe(1)
-    expect(gate(100)).toBe(0)
+    expect(gate(0, 100)).toBe('next')
+    expect(gate(0, 100)).toBeNull()
     now = 200
-    expect(gate(-100)).toBe(0)
+    expect(gate(0, -100)).toBeNull()
     now = 600
-    expect(gate(-100)).toBe(-1)
+    expect(gate(0, -100)).toBe('prev')
   })
 
   it('forgets unfinished accumulation between distant gestures', () => {
     let now = 0
     const gate = createWheelGate(() => now)
-    expect(gate(40)).toBe(0)
+    expect(gate(0, 40)).toBeNull()
     now = 1000
-    expect(gate(40)).toBe(0)
+    expect(gate(0, 40)).toBeNull()
+  })
+
+  it('flips on a horizontal gesture', () => {
+    expect(createWheelGate(() => 0)(70, 0)).toBe('flip')
+    expect(createWheelGate(() => 0)(-70, 0)).toBe('flip')
+  })
+
+  it('gives a gesture carrying both axes to the dominant one', () => {
+    expect(createWheelGate(() => 0)(80, 30)).toBe('flip')
+    expect(createWheelGate(() => 0)(30, 80)).toBe('next')
+    expect(createWheelGate(() => 0)(30, -80)).toBe('prev')
   })
 })
 
