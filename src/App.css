@@ -10,8 +10,28 @@
 }
 
 .header {
+  position: relative;
   text-align: center;
   margin-bottom: 6px;
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-height: 32px;
+  padding: 0 12px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--fg);
+  background: var(--bg);
+  border: 1.5px solid var(--fg);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  background: var(--hover);
 }
 
 .header-title {
@@ -38,15 +58,15 @@
   justify-content: center;
   min-height: 40px;
   font-size: 14px;
-  color: #000;
+  color: var(--fg);
   text-decoration: none;
-  border: 1.5px solid #000;
+  border: 1.5px solid var(--fg);
   border-radius: 12px;
 }
 
 .tab[aria-current='page'] {
-  color: #fff;
-  background: #000;
+  color: var(--bg);
+  background: var(--fg);
 }
 
 .card-area {
@@ -70,7 +90,7 @@
 }
 
 .card:focus-visible {
-  outline: 2px solid #000;
+  outline: 2px solid var(--fg);
   outline-offset: 4px;
   border-radius: 24px;
 }
@@ -95,8 +115,8 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: #fff;
-  border: 2px solid #000;
+  background: var(--bg);
+  border: 2px solid var(--fg);
   border-radius: 24px;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -180,21 +200,21 @@
   padding: 0 16px;
   font: inherit;
   font-size: 15px;
-  color: #000;
-  background: #fff;
-  border: 1.5px solid #000;
+  color: var(--fg);
+  background: var(--bg);
+  border: 1.5px solid var(--fg);
   border-radius: 12px;
   cursor: pointer;
 }
 
 .button:hover,
 .filter-select:hover {
-  background: #f5f5f5;
+  background: var(--hover);
 }
 
 .button:active {
-  background: #000;
-  color: #fff;
+  background: var(--fg);
+  color: var(--bg);
 }
 
 .nav {
@@ -270,8 +290,8 @@
   gap: 1px;
   padding: 3px 2px;
   text-align: center;
-  background: #fff;
-  border: 1px solid #000;
+  background: var(--bg);
+  border: 1px solid var(--fg);
   border-radius: 8px;
 }
 
